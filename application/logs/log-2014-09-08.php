@@ -1,0 +1,20 @@
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+
+ERROR - 2014-09-08 01:45:13 --> 404 Page Not Found --> auth/js
+ERROR - 2014-09-08 01:45:14 --> 404 Page Not Found --> auth/js
+ERROR - 2014-09-08 10:33:16 --> 404 Page Not Found --> auth/js
+ERROR - 2014-09-08 10:33:17 --> 404 Page Not Found --> auth/js
+ERROR - 2014-09-08 18:18:05 --> 404 Page Not Found --> auth/js
+ERROR - 2014-09-08 18:18:06 --> 404 Page Not Found --> auth/js
+ERROR - 2014-09-08 18:18:16 --> 404 Page Not Found --> auth/js
+ERROR - 2014-09-08 18:18:17 --> 404 Page Not Found --> auth/js
+ERROR - 2014-09-08 18:18:20 --> 404 Page Not Found --> auth/js
+ERROR - 2014-09-08 18:18:21 --> 404 Page Not Found --> auth/js
+ERROR - 2014-09-08 18:18:21 --> 404 Page Not Found --> auth/js
+ERROR - 2014-09-08 18:18:25 --> 404 Page Not Found --> auth/js
+ERROR - 2014-09-08 18:18:26 --> 404 Page Not Found --> auth/js
+ERROR - 2014-09-08 18:18:26 --> 404 Page Not Found --> auth/js
+ERROR - 2014-09-08 18:18:28 --> 404 Page Not Found --> auth/js
+ERROR - 2014-09-08 18:18:29 --> 404 Page Not Found --> auth/js
+ERROR - 2014-09-08 18:18:30 --> 404 Page Not Found --> auth/js
+ERROR - 2014-09-08 18:18:31 --> 404 Page Not Found --> auth/js
