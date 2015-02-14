@@ -1,11 +1,11 @@
 <div class="page-header">
 <h3>Departments</h3>
 </div>
-
+<p><?php echo anchor('departments/create', lang('index_create_user_link'), 'class="btn btn-default"')?> </p>
 <div class="clearfix">&nbsp;</div>
 <div class="row">
 
-<div class="col-lg-9">
+<div class="col-md-12">
 <div class="panel panel-primary">
  <div class="panel-heading">Departments</div>
   <div class="panel-body">    
@@ -45,60 +45,4 @@
 </div>
 </div>
 </div>
-
-<div class="col-lg-3">
-<div class="panel panel-primary">
- <div class="panel-heading">Department menu</div>
-  <div class="panel-body">    
- <ul class="list-group">
-   <li class="list-group-item"><a href="<?php echo base_url("index.php/departments/create");?>"><i class="fa fa-plus"></i> Create department</a></li> 
-   <li class="list-group-item"><a href="<?php echo base_url("index.php/departments/index");?>"><i class="fa fa-table"></i> list departments</a></li> 
- </ul>
-</div>
-</div>
-</div>
-
-
-
-<div class="modal fade" id="create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">Create department</h4>
-      </div>
-      <div class="modal-body">
-        <form action="" method="post" class="form-horizontal">
-        
-         <div class="form-group">
-          <label for="name" class="form-label col-md-3"> Name</label>
-            <div class="col-lg-6">                            
-             <input type="text" class="form-control input-sm" name="name" id="name" required="required" />
-            </div>
-              </div>
-
-             <div class="form-group">
-              <label for="name" class="form-label col-md-3">Manager</label>
-                <div class="col-lg-6">                            
-                   <select name="manager" required="required" class="form-control input-sm"/>
-                   <option value="" selected="selected"></option>
-                     	<?php foreach ($logins as $login):?>
-                <option value="<?php echo $login->id;?>"><?php echo $login->first_name;?> <?php echo $login->last_name;?></option>
-                       <?php endforeach;?>
-                           </select>
-
-                        </div>
-                        </div>
-
-       <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary btn-sm">Save changes</button>
-      </div>
- </form>	
-      </div>
-      
-    </div>
-  </div>
-</div>
-
 </div>

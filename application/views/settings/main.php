@@ -35,7 +35,7 @@
 						<label for="field-1" class="col-sm-3 control-label">Open from</label>
 						
 						<div class="col-sm-5">
-<div name="open" class="bfh-timepicker" data-time="now" data-mode="12h"> </div>
+<div name="open" class="bfh-timepicker" data-time="now"> </div>
 						</div>
 					</div>
 					

@@ -215,6 +215,65 @@ $('#plan-agent').fullCalendar({
 		
 	});
 
+ $('#loginForm').bootstrapValidator();
+
+
+$("#table-plus").bootgrid({
+formatters: {
+"link": function(column, row)
+{
+return "<a href=\"#\">Edit</a>";
+}
+}
+});
+
+$(function () {
+    $('#container').highcharts({
+        data: {
+            table: document.getElementById('datatable')
+        },
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: ' '
+        },
+        yAxis: {
+            allowDecimals: false,
+            title: {
+                text: ''
+            }
+        },
+ tooltip: {
+            enabled: true
+        }
+    });
+    
+    $('#speedometer').highcharts({
+        data: {
+            table: document.getElementById('datatable')
+        },
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: ' '
+        },
+        yAxis: {
+            allowDecimals: true,
+            title: {
+                text: 'Monthly statics'
+            }
+        },
+        series: [{
+     showInLegend: false
+}],
+ tooltip: {
+            enabled: true
+        }
+    });
+        });
+  
 
 $(document).ready(function () {
 

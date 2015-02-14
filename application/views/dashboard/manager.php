@@ -1,16 +1,15 @@
 <div class="row">
- <div class="col-lg-3">
+<div class="col-md-12">
+ <div class="col-md-4">
      <div id="myStat"
-          data-dimension="250"
-          data-text="80"
+          data-text="40"
           data-type="full"
           data-info="New tasks"
-          data-width="90"
-          data-fontsize="38"
+          data-fontsize="35"
           data-percent="100" 
           data-fgcolor="#f89406"
           data-bgcolor="#eee"
-          data-fill="#f1f1f1"
+          data-fill="#ffffff"
           data-total="100"
           data-part="60"
           data-animationstep="0"  
@@ -19,17 +18,16 @@
       </div>
 </div> 
  
- <div class="col-lg-3">
+ <div class="col-md-4">
      <div id="myStat2"
-          data-dimension="250"
-          data-text="3"
+          data-text="30"
           data-info="Vacation requests"
           data-width="30"
-          data-fontsize="38"
+          data-fontsize="48"
           data-percent="35" 
           data-fgcolor="#469408"
           data-bgcolor="#eee"
-          data-fill="#f1f1f1"
+          data-fill="#ffffff"
           data-total="100"
           data-part="35"
           data-animationstep="0"
@@ -38,16 +36,15 @@
       </div>
 </div>
 
- <div class="col-lg-3">
+ <div class="col-md-3">
      <div id="myStat3"
-          data-dimension="250"
-          data-text="4/5"
+          data-text="30"
           data-info="Break"
           data-width="30"
           data-fontsize="38"
           data-fgcolor="#d9230f"
           data-bgcolor="#eee"
-          data-fill="#f1f1f1"
+          data-fill="#ffffff"
           data-total="5"
           data-part="4"
           data-type="full"
@@ -57,33 +54,16 @@
       </div>
 </div>
 
- <div class="col-lg-3">
-     <div id="myStat4"
-          data-dimension="250"
-          data-text="35"
-          data-info="Announcements"
-          data-width="30"
-          data-fontsize="38"
-          data-percent="35" 
-          data-fgcolor="#d9230f"
-          data-bgcolor="#eee"
-          data-fill="#f1f1f1"
-          data-total="20"
-          data-part="35"
-          data-animationstep="0"    
-          data-bordersize="20"                    
->
-      </div>
+
+
 </div>
-
-
 </div>
 <div class="clearfix">&nbsp;</div>
 
 
 
   <div class="row">
-<div class="col-lg-6">
+<div class="col-md-6 col-sm-2">
 <div class="column">
 
 <div class="panel panel-primary">
@@ -172,7 +152,7 @@ $now = time();
 
 
 
-<div class="col-lg-6">
+<div class="col-md-6 col-sm-4">
 <div class="column">
 
 <div class="panel panel-primary">

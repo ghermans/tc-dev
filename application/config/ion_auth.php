@@ -31,6 +31,8 @@ $config['tables']['users']           = 'users';
 $config['tables']['groups']          = 'groups';
 $config['tables']['users_groups']    = 'users_groups';
 $config['tables']['login_attempts']  = 'login_attempts';
+$config['tables']['permissions']        = 'permissions';
+$config['tables']['groups_permissions'] = 'groups_permissions';
 
 /*
  | Users table column and Group table column you want to join WITH.
@@ -40,6 +42,15 @@ $config['tables']['login_attempts']  = 'login_attempts';
  */
 $config['join']['users']  = 'user_id';
 $config['join']['groups'] = 'group_id';
+
+/*
+ | Group table column and Permissions table column you want to join WITH.
+ |
+ | Joins from groups.id
+ | Joins from permissions.id
+ */
+$config['join']['groups']      = 'group_id';
+$config['join']['permissions'] = 'permission_id';
 
 /*
  | -------------------------------------------------------------------------
@@ -56,8 +67,9 @@ $config['join']['groups'] = 'group_id';
  | but remember the more rounds you set the longer it will take to hash (CPU usage) So adjust
  | this based on your server hardware.
  |
- | If you are using Bcrypt the Admin password field also needs to be changed in order login as admin:
- | $2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36
+ | If you are using Bcrypt the Admin password field also needs to be changed in order to login as admin:
+ | $2y$: $2y$08$200Z6ZZbp3RAEXoaWcMA6uJOFicwNZaqk4oDhqTUiFXFe63MG.Daa
+ | $2a$: $2a$08$6TTcWD1CJ8pzDy.2U3mdi.tpl.nYOR1pwYXwblZdyQd9SL16B7Cqa
  |
  | Be careful how high you set max_rounds, I would do your own testing on how long it takes
  | to encrypt with x rounds.
@@ -70,7 +82,7 @@ $config['default_rounds'] = 8;		// This does not apply if random_rounds is set t
 $config['random_rounds']  = FALSE;
 $config['min_rounds']     = 5;
 $config['max_rounds']     = 9;
-$config['salt_prefix']    = '$2y$';
+$config['salt_prefix']    = version_compare(PHP_VERSION, '5.3.7', '<') ? '$2a$' : '$2y$';
 
 /*
  | -------------------------------------------------------------------------
@@ -81,19 +93,19 @@ $config['salt_prefix']    = '$2y$';
  | The controller should check this function and act
  | appropriately. If this variable set to 0, there is no maximum.
  */
-$config['site_title']                 = "timecontrol.be";       // Site Title, example.com
-$config['admin_email']                = "noreply@timecontrol.be"; // Admin Email, admin@example.com
+$config['site_title']                 = "Example.com";       // Site Title, example.com
+$config['admin_email']                = "admin@example.com"; // Admin Email, admin@example.com
 $config['default_group']              = 'members';           // Default group, use name
 $config['admin_group']                = 'admin';             // Default administrators group, use name
 $config['identity']                   = 'email';             // A database column which is used to login with
 $config['min_password_length']        = 8;                   // Minimum Required Length of Password
 $config['max_password_length']        = 20;                  // Maximum Allowed Length of Password
-$config['email_activation']           = false;               // Email Activation for registration
+$config['email_activation']           = FALSE;               // Email Activation for registration
 $config['manual_activation']          = FALSE;               // Manual Activation for registration
 $config['remember_users']             = TRUE;                // Allow users to be remembered and enable auto-login
-$config['user_expire']                = 0;               // How long to remember the user (seconds). Set to zero for no expiration
+$config['user_expire']                = 86500;               // How long to remember the user (seconds). Set to zero for no expiration
 $config['user_extend_on_login']       = FALSE;               // Extend the users cookies every time they auto-login
-$config['track_login_attempts']       = TRUE;               // Track the number of failed login attempts for each user or ip.
+$config['track_login_attempts']       = FALSE;               // Track the number of failed login attempts for each user or ip.
 $config['track_login_ip_address']     = TRUE;                // Track login attempts by IP Address, if FALSE will track based on identity. (Default: TRUE)
 $config['maximum_login_attempts']     = 3;                   // The maximum number of failed login attempts.
 $config['lockout_time']               = 600;                 // The number of seconds to lockout an account due to exceeded attempts
@@ -117,7 +129,7 @@ $config['identity_cookie_name'] = 'identity';
  | 	  'file' = Use the default CI config or use from a config file
  | 	  array  = Manually set your email config settings
  */
-$config['use_ci_email'] = TRUE; // Send Email using the builtin CI email class, if false it will return the code and the identity
+$config['use_ci_email'] = FALSE; // Send Email using the builtin CI email class, if false it will return the code and the identity
 $config['email_config'] = array(
 	'mailtype' => 'html',
 );
@@ -177,8 +189,8 @@ $config['store_salt']  = FALSE;
 $config['delimiters_source']       = 'config'; 	// "config" = use the settings defined here, "form_validation" = use the settings defined in CI's form validation library
 $config['message_start_delimiter'] = '<p>'; 	// Message start delimiter
 $config['message_end_delimiter']   = '</p>'; 	// Message end delimiter
-$config['error_start_delimiter']   = '<p>';		// Error mesage start delimiter
-$config['error_end_delimiter']     = '</p>';	// Error mesage end delimiter
+$config['error_start_delimiter']   = '<p>';		// Error message start delimiter
+$config['error_end_delimiter']     = '</p>';	// Error message end delimiter
 
 /* End of file ion_auth.php */
 /* Location: ./application/config/ion_auth.php */

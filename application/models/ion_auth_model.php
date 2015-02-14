@@ -162,11 +162,25 @@ class Ion_auth_model extends CI_Model
 	public $_cache_user_in_group = array();
 
 	/**
+	 * caching of groups and their permissions
+	 *
+	 * @var array
+	 **/
+	public $_cache_group_in_permission = array();
+
+	/**
 	 * caching of groups
 	 *
 	 * @var array
 	 **/
 	protected $_cache_groups = array();
+
+	/**
+	 * caching of permissions
+	 *
+	 * @var array
+	 **/
+	protected $_cache_permissions = array();
 
 	public function __construct()
 	{
@@ -311,6 +325,7 @@ class Ion_auth_model extends CI_Model
 		$query = $this->db->select('password, salt')
 		                  ->where('id', $id)
 		                  ->limit(1)
+		                  ->order_by('id', 'desc')
 		                  ->get($this->tables['users']);
 
 		$hash_password_db = $query->row();
@@ -458,6 +473,7 @@ class Ion_auth_model extends CI_Model
 			                  ->where('activation_code', $code)
 			                  ->where('id', $id)
 			                  ->limit(1)
+		    				  ->order_by('id', 'desc')
 			                  ->get($this->tables['users']);
 
 			$result = $query->row();
@@ -586,6 +602,7 @@ class Ion_auth_model extends CI_Model
 		$query = $this->db->select('id, password, salt')
 		                  ->where($this->identity_column, $identity)
 		                  ->limit(1)
+		    			  ->order_by('id', 'desc')
 		                  ->get($this->tables['users']);
 
 		if ($query->num_rows() !== 1)
@@ -641,6 +658,7 @@ class Ion_auth_model extends CI_Model
 		$query = $this->db->select('id, password, salt')
 		                  ->where($this->identity_column, $identity)
 		                  ->limit(1)
+		    			  ->order_by('id', 'desc')
 		                  ->get($this->tables['users']);
 
 		if ($query->num_rows() !== 1)
@@ -702,6 +720,8 @@ class Ion_auth_model extends CI_Model
 		$this->trigger_events('extra_where');
 
 		return $this->db->where('username', $username)
+				->order_by("id", "ASC")
+				->limit(1)
 		                ->count_all_results($this->tables['users']) > 0;
 	}
 
@@ -723,6 +743,8 @@ class Ion_auth_model extends CI_Model
 		$this->trigger_events('extra_where');
 
 		return $this->db->where('email', $email)
+				->order_by("id", "ASC")
+				->limit(1)
 		                ->count_all_results($this->tables['users']) > 0;
 	}
 
@@ -876,6 +898,22 @@ class Ion_auth_model extends CI_Model
 			$this->set_error('account_creation_duplicate_username');
 			return FALSE;
 		}
+		elseif ( !$this->config->item('default_group', 'ion_auth') && empty($groups) )
+		{
+			$this->set_error('account_creation_missing_default_group');
+			return FALSE;
+		}
+
+		//check if the default set in config exists in database
+		$query = $this->db->get_where('groups',array('name' => $this->config->item('default_group', 'ion_auth')),1)->row();
+		if( !isset($query->id) && empty($groups) ) 
+		{
+			$this->set_error('account_creation_invalid_default_group');
+			return FALSE;
+		}
+
+		//capture default group details
+		$default_group = $query;
 
 		// If username is taken, use username1 or username2, etc.
 		if ($this->identity_column != 'username')
@@ -902,7 +940,6 @@ class Ion_auth_model extends CI_Model
 		    'email'      => $email,
 		    'ip_address' => $ip_address,
 		    'created_on' => time(),
-		    'last_login' => time(),
 		    'active'     => ($manual_activation === false ? 1 : 0)
 		);
 
@@ -921,6 +958,12 @@ class Ion_auth_model extends CI_Model
 
 		$id = $this->db->insert_id();
 
+		//add in groups array if it doesn't exits and stop adding into default group if default group ids are set
+		if( isset($default_group->id) && empty($groups) )
+		{
+			$groups[] = $default_group->id;
+		}
+
 		if (!empty($groups))
 		{
 			//add to groups
@@ -930,14 +973,8 @@ class Ion_auth_model extends CI_Model
 			}
 		}
 
-		//add to default group if not already set
-		$default_group = $this->where('name', $this->config->item('default_group', 'ion_auth'))->group()->row();
-		if ((isset($default_group->id) && empty($groups)) || (!empty($groups) && !in_array($default_group->id, $groups)))
-		{
-			$this->add_to_group($default_group->id, $id);
-		}
-
 		$this->trigger_events('post_register');
+
 		return (isset($id)) ? $id : FALSE;
 	}
 
@@ -962,6 +999,7 @@ class Ion_auth_model extends CI_Model
 		$query = $this->db->select($this->identity_column . ', username, email, id, password, active, last_login')
 		                  ->where($this->identity_column, $identity)
 		                  ->limit(1)
+		    			  ->order_by('id', 'desc')
 		                  ->get($this->tables['users']);
 
 		if($this->is_time_locked_out($identity))
@@ -994,13 +1032,7 @@ class Ion_auth_model extends CI_Model
 				$this->set_session($user);
 
 				$this->update_last_login($user->id);
-            $data = array(
-             'user' => $user->id,
-             'type' => 'user' ,
-             'action' => 'logged in successful'
-                    );
-          $this->db->insert('logs', $data); 
-          
+
 				$this->clear_login_attempts($identity);
 
 				if ($remember && $this->config->item('remember_users', 'ion_auth'))
@@ -1202,7 +1234,6 @@ class Ion_auth_model extends CI_Model
 		$this->trigger_events('row');
 
 		$row = $this->response->row();
-		$this->response->free_result();
 
 		return $row;
 	}
@@ -1212,7 +1243,6 @@ class Ion_auth_model extends CI_Model
 		$this->trigger_events(array('row', 'row_array'));
 
 		$row = $this->response->row_array();
-		$this->response->free_result();
 
 		return $row;
 	}
@@ -1222,7 +1252,6 @@ class Ion_auth_model extends CI_Model
 		$this->trigger_events('result');
 
 		$result = $this->response->result();
-		$this->response->free_result();
 
 		return $result;
 	}
@@ -1232,7 +1261,6 @@ class Ion_auth_model extends CI_Model
 		$this->trigger_events(array('result', 'result_array'));
 
 		$result = $this->response->result_array();
-		$this->response->free_result();
 
 		return $result;
 	}
@@ -1242,7 +1270,6 @@ class Ion_auth_model extends CI_Model
 		$this->trigger_events(array('num_rows'));
 
 		$result = $this->response->num_rows();
-		$this->response->free_result();
 
 		return $result;
 	}
@@ -1364,6 +1391,7 @@ class Ion_auth_model extends CI_Model
 		$id || $id = $this->session->userdata('user_id');
 
 		$this->limit(1);
+		$this->order_by('id', 'desc');
 		$this->where($this->tables['users'].'.id', $id);
 
 		$this->users();
@@ -1396,28 +1424,40 @@ class Ion_auth_model extends CI_Model
 	 * @return bool
 	 * @author Ben Edmunds
 	 **/
-	public function add_to_group($group_id, $user_id=false)
+	public function add_to_group($group_ids, $user_id=false)
 	{
 		$this->trigger_events('add_to_group');
 
 		//if no id was passed use the current users id
 		$user_id || $user_id = $this->session->userdata('user_id');
 
-		//check if unique - num_rows() > 0 means row found
-		if ($this->db->where(array( $this->join['groups'] => (int)$group_id, $this->join['users'] => (int)$user_id))->get($this->tables['users_groups'])->num_rows()) return false;
-
-		if ($return = $this->db->insert($this->tables['users_groups'], array( $this->join['groups'] => (int)$group_id, $this->join['users'] => (int)$user_id)))
+		if(!is_array($group_ids))
 		{
-			if (isset($this->_cache_groups[$group_id])) {
-				$group_name = $this->_cache_groups[$group_id];
-			}
-			else {
-				$group = $this->group($group_id)->result();
-				$group_name = $group[0]->name;
-				$this->_cache_groups[$group_id] = $group_name;
-			}
-			$this->_cache_user_in_group[$user_id][$group_id] = $group_name;
+			$group_ids = array($group_ids);
 		}
+
+		$return = 0;
+
+		// Then insert each into the database
+		foreach ($group_ids as $group_id)
+		{
+			if ($this->db->insert($this->tables['users_groups'], array( $this->join['groups'] => (int)$group_id, $this->join['users'] => (int)$user_id)))
+			{
+				if (isset($this->_cache_groups[$group_id])) {
+					$group_name = $this->_cache_groups[$group_id];
+				}
+				else {
+					$group = $this->group($group_id)->result();
+					$group_name = $group[0]->name;
+					$this->_cache_groups[$group_id] = $group_name;
+				}
+				$this->_cache_user_in_group[$user_id][$group_id] = $group_name;
+
+				// Return the number of groups added
+				$return += 1;
+			}
+		}
+
 		return $return;
 	}
 
@@ -1527,6 +1567,7 @@ class Ion_auth_model extends CI_Model
 		}
 
 		$this->limit(1);
+		$this->order_by('id', 'desc');
 
 		return $this->groups();
 	}
@@ -1545,7 +1586,7 @@ class Ion_auth_model extends CI_Model
 
 		$this->db->trans_begin();
 
-		if (array_key_exists($this->identity_column, $data) && $this->identity_check($data[$this->identity_column])  && $this->identity_check($data[$this->identity_column]) && $user->{$this->identity_column} !== $data[$this->identity_column])
+		if (array_key_exists($this->identity_column, $data) && $this->identity_check($data[$this->identity_column]) && $user->{$this->identity_column} !== $data[$this->identity_column])
 		{
 			$this->db->trans_rollback();
 			$this->set_error('account_creation_duplicate_'.$this->identity_column);
@@ -1773,8 +1814,8 @@ class Ion_auth_model extends CI_Model
 		$this->trigger_events('pre_login_remembered_user');
 
 		//check for valid data
-		if (!get_cookie($this->config->item('identity_cookie_name', 'ion_auth')) 
-			|| !get_cookie($this->config->item('remember_cookie_name', 'ion_auth')) 
+		if (!get_cookie($this->config->item('identity_cookie_name', 'ion_auth'))
+			|| !get_cookie($this->config->item('remember_cookie_name', 'ion_auth'))
 			|| !$this->identity_check(get_cookie($this->config->item('identity_cookie_name', 'ion_auth'))))
 		{
 			$this->trigger_events(array('post_login_remembered_user', 'post_login_remembered_user_unsuccessful'));
@@ -1787,6 +1828,7 @@ class Ion_auth_model extends CI_Model
 		                  ->where($this->identity_column, get_cookie($this->config->item('identity_cookie_name', 'ion_auth')))
 		                  ->where('remember_code', get_cookie($this->config->item('remember_cookie_name', 'ion_auth')))
 		                  ->limit(1)
+		    			  ->order_by('id', 'desc')
 		                  ->get($this->tables['users']);
 
 		//if the user was found, sign them in
@@ -1933,6 +1975,288 @@ class Ion_auth_model extends CI_Model
 
 		$this->trigger_events(array('post_delete_group', 'post_delete_group_successful'));
 		$this->set_message('group_delete_successful');
+		return TRUE;
+	}
+
+	/**
+	 * get_groups_permissions
+	 *
+	 * @return array
+	 * @author Sadika Sumanapala
+	 **/
+	public function get_groups_permissions($id)
+	{
+		$this->trigger_events('get_groups_permission');
+
+		if(!$id || empty($id))
+		{
+			return FALSE;
+		}
+
+		return $this->db->select($this->tables['groups_permissions'].'.'.$this->join['permissions'].' as id, '.$this->tables['permissions'].'.name, '.$this->tables['permissions'].'.description')
+			    ->where($this->tables['groups_permissions'].'.'.$this->join['groups'], $id)
+			    ->join($this->tables['permissions'], $this->tables['groups_permissions'].'.'.$this->join['permissions'].'='.$this->tables['permissions'].'.id')
+			    ->get($this->tables['groups_permissions']);
+	}
+
+	/**
+	 * add_permission_to_group
+	 *
+	 * @return bool
+	 * @author Sadika Sumanapala
+	 **/
+	public function add_permission_to_group($group_id, $permission_id)
+	{
+		$this->trigger_events('add_permission_to_group');
+
+		if(!$group_id || empty($group_id) || !$permission_id || empty($permission_id))
+		{
+			return FALSE;
+		}
+
+		//check if unique - num_rows() > 0 means row found
+		if ($this->db->where(array( $this->join['permissions'] => (int)$permission_id, $this->join['groups'] => (int)$group_id))->get($this->tables['groups_permissions'])->num_rows()) return false;
+
+		if ($return = $this->db->insert($this->tables['groups_permissions'], array( $this->join['permissions'] => (int)$permission_id, $this->join['groups'] => (int)$group_id)))
+		{
+			if (isset($this->_cache_permissions[$permission_id]))
+			{
+				$permission_name = $this->_cache_permissions[$permission_id];
+			}
+			else
+			{
+				$permission = $this->permission($permission_id)->result();
+				$permission_name = $permission[0]->name;
+				$this->_cache_permissions[$permission_id] = $permission_name;
+			}
+			$this->_cache_group_in_permission[$group_id][$permission_id] = $permission_name;
+		}
+
+		return $return;
+	}
+
+	/**
+	 * remove_permissions_from_group
+	 *
+	 * @return bool
+	 * @author Sadika Sumanapala
+	 **/
+	public function remove_permissions_from_group($group_id = false, $permission_ids = false)
+	{
+		$this->trigger_events('remove_permission_from_group');
+
+		if(empty($group_id))
+		{
+			return FALSE;
+		}
+
+		if( ! empty($permission_ids)) // if permission id(s) are passed remove those permission(s) from the group
+		{
+			if(!is_array($permission_ids))
+			{
+				$permission_ids = array($permission_ids);
+			}
+
+			foreach($permission_ids as $permission_id)
+			{
+				$this->db->delete($this->tables['groups_permissions'], array($this->join['permissions'] => (int)$permission_id, $this->join['groups'] => (int)$group_id));
+				if (isset($this->_cache_group_in_permission[$group_id]) && isset($this->_cache_group_in_permission[$group_id][$permission_id]))
+				{
+					unset($this->_cache_group_in_permission[$group_id][$permission_id]);
+				}
+			}
+
+			$return = TRUE;
+		}
+		else // otherwise remove all permissions from group
+		{
+			if ($return = $this->db->delete($this->tables['groups_permissions'], array($this->join['groups'] => (int)$group_id))) 
+			{
+				$this->_cache_group_in_permission[$group_id] = array();
+			}
+		}
+
+		return $return;
+	}
+
+	/**
+	 * permissions
+	 *
+	 * @return object
+	 * @author Sadika Sumanapala
+	 **/
+	public function permissions()
+	{
+	    $this->trigger_events('permissions');
+
+		//run each 'where' that was passed
+		if (isset($this->_ion_where) && !empty($this->_ion_where))
+		{
+			foreach ($this->_ion_where as $where)
+			{
+				$this->db->where($where);
+			}
+			$this->_ion_where = array();
+		}
+
+		if (isset($this->_ion_limit) && isset($this->_ion_offset))
+		{
+			$this->db->limit($this->_ion_limit, $this->_ion_offset);
+
+			$this->_ion_limit  = NULL;
+		$this->_ion_offset = NULL;
+		}
+		else if (isset($this->_ion_limit))
+		{
+			$this->db->limit($this->_ion_limit);
+			$this->_ion_limit  = NULL;
+		}
+
+		//set the order
+		if (isset($this->_ion_order_by) && isset($this->_ion_order))
+		{
+			$this->db->order_by($this->_ion_order_by, $this->_ion_order);
+		}
+
+		$this->response = $this->db->get($this->tables['permissions']);
+
+		return $this;
+	}
+
+	/**
+	 * permission
+	 *
+	 * @return object
+	 * @author Sadika Sumanapala
+	 **/
+	public function permission($id = NULL)
+	{
+		$this->trigger_events('permission');
+
+		if (isset($id))
+		{
+		$this->where($this->tables['permissions'].'.id', $id);
+		}
+
+		$this->limit(1);
+
+		return $this->permissions();
+	}
+
+	/**
+	 * create_permission
+	 *
+	 * @author Sadika Sumanapala
+	 */
+	public function create_permission($permission_name = FALSE, $permission_description = '', $additional_data = array())
+	{
+		if(!$permission_name)
+		{
+			$this->set_error('permission_name_required');
+			return FALSE;
+		}
+
+		// check permission name already exists
+		$existing_group = $this->db->get_where($this->tables['permissions'], array('name' => $permission_name))->num_rows();
+		if($existing_group !== 0)
+		{
+			$this->set_error('permission_already_exists');
+			return FALSE;
+		}
+
+		$data = array('name' => $permission_name,'description' => $permission_description);
+
+		// filter out any data passed that doesnt have a matching column in the permissions table
+		// and merge the set permission data and the additional data
+		if (!empty($additional_data))
+			$data = array_merge($this->_filter_data($this->tables['permissions'], $additional_data), $data);
+
+		$this->trigger_events('extra_permission_set');
+
+		// insert the new permission
+		$this->db->insert($this->tables['permissions'], $data);
+		$permission_id = $this->db->insert_id();
+
+		// report success
+		$this->set_message('permission_creation_successful');
+
+		// return the brand new permission id
+		return $permission_id;
+	}
+
+	/**
+	 * update_permission
+	 *
+	 * @return bool
+	 * @author Sadika Sumanapala
+	 **/
+	public function update_permission($permission_id = FALSE, $permission_name = FALSE, $additional_data = array())
+	{
+		if (empty($permission_id)) return FALSE;
+
+		$data = array();
+
+		if (!empty($permission_name)) // change name
+		{
+			// check permission name already exists
+			$existing_permission = $this->db->get_where($this->tables['permissions'], array('name' => $permission_name))->row();
+			if(isset($existing_permission->id) && $existing_permission->id != $permission_id)
+			{
+				$this->set_error('permission_already_exists');
+				return FALSE;
+			}
+
+			$data['name'] = $permission_name;
+		}
+
+		// filter out any data passed that doesnt have a matching column in the permissions table
+		// and merge the set permission data and the additional data
+		if (!empty($additional_data))
+			$data = array_merge($this->_filter_data($this->tables['permissions'], $additional_data), $data);
+
+
+		$this->db->update($this->tables['permissions'], $data, array('id' => $permission_id));
+
+		$this->set_message('permission_update_successful');
+
+		return TRUE;
+	}
+
+	/**
+	 * delete_permission
+	 *
+	 * @return bool
+	 * @author Sadika Sumanapala
+	 **/
+	public function delete_permission($permission_id = FALSE)
+	{
+		// permission_id required
+		if(!$permission_id || empty($permission_id))
+		{
+			return FALSE;
+		}
+
+		$this->trigger_events('pre_delete_permission');
+
+		$this->db->trans_begin();
+
+		// remove this permission from all groups
+		$this->db->delete($this->tables['groups_permissions'], array($this->join['permissions'] => $permission_id));
+		// remove permission itself
+		$this->db->delete($this->tables['permissions'], array('id' => $permission_id));
+
+		if ($this->db->trans_status() === FALSE)
+		{
+			$this->db->trans_rollback();
+			$this->trigger_events(array('post_delete_permission', 'post_delete_permission_unsuccessful'));
+			$this->set_error('permission_delete_unsuccessful');
+			return FALSE;
+		}
+
+		$this->db->trans_commit();
+
+		$this->trigger_events(array('post_delete_permission', 'post_delete_permission_successful'));
+		$this->set_message('permission_delete_successful');
 		return TRUE;
 	}
 
