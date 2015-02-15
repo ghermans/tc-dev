@@ -24,6 +24,28 @@ class Planning_model extends CI_Model {
 		$query = $this->db->get('task_shifts');
 		return $query->result_array();
 	}
+	
+	public function add_work_hour()
+{
+	$this->load->helper('url');
+
+	
+    $this->db->where('shift_start', $this->input->post('shift_start'));
+    $this->db->where('shift_end', $this->input->post('shift_stop'));    
+    $query = $this->db->get('task_shifts');
+    if ($query->num_rows() > 0){
+
+     return false;
+    }
+    else{
+   $data = array(
+		'shift_code' =>  $this->input->post('shift_code'),
+		'shift_start' => $this->input->post('shift_start'),
+		'shift_end' =>   $this->input->post('shift_stop')
+	); 
+	
+  	return $this->db->insert('task_shifts', $data);    }
+}
    
    
 public function get_news($id = FALSE)
