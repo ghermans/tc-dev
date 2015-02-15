@@ -28,21 +28,22 @@
 </table>
 
 </div>
-!-- Modal -->
+
 <div class="modal fade" id="addshift" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-md">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="glyphicon glyphicon-remove"></i></span></button>
         <h4 class="modal-title" id="myModalLabel">Add shift</h4>
       </div>
+        <?php echo form_open('', 'class="form-horizontal"');?>
       <div class="modal-body">
-        <form class="form-horizontal">
+
 					<div class="form-group">
 						<label for="shift_code" class="col-sm-3 control-label">Code</label>
 						
 						<div class="col-md-6">
-							<input type="text" class="form-control" value="" id="shift_code">
+							<input type="text" name="shift_code" class="form-control" value="" id="shift_code">
 						</div>
 					</div>
 
@@ -52,23 +53,23 @@
 						<label for="shift_start" class="col-sm-3 control-label">Start time</label>
 						
 						<div class="col-md-6">
-<div name="open" id="shift_start" class="bfh-timepicker" data-time="now"> </div>
+                  <input type="text" name="shift_start" id="time" class="form-control"> </div>
 						</div>
-					</div>
+
 					
 					<div class="form-group">
 						<label for="shift_stop" class="col-sm-3 control-label">End time</label>
 						<div class="col-md-6">
-							<div name="closed"  id="shift_stop" class="bfh-timepicker"> </div>
+							<input type="text" name="shift_stop" id="shift_stop" class="form-control"> </div>
 						</div>
-					</div>
-					</form>					
-      </div>
+					
+    </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
       </div>
-    </div>
+      <?php echo form_close();?>
+
   </div>
 </div>
 </div>
