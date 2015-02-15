@@ -45,6 +45,36 @@ class Planning extends CI_Controller {
 	
 	public function shifts()
 	{
+		if (!$this->ion_auth->logged_in() || !$this->ion_auth->has_permission('manage_shifts_hours'))
+		{
+			show_error("You don't have permission to manage the work hours");
+		}		
+		
+	   $data['shift'] = $this->department_model->get_departments();
+		$data['users'] = $this->ion_auth->users()->result();	   
+	   $this->load->vars($data);
+		
+		
+	if ($this->form_validation->run() === FALSE)
+	{
+		$this->load->view('templates/header', $data);
+		$this->load->view('planning/shifts', $data);
+		$this->load->view('templates/footer');
+
+	}
+	else
+	{   $this->planning_model->set_event();		
+			
+		$this->load->view('templates/header', $data);	
+		$this->load->view('planning/shifts', $data);
+		$this->load->view('templates/footer');				
+			
+		}	
+}
+	
+
+	public function backup_shifts()
+	{
 		if (!$this->ion_auth->logged_in())
 		{
 		  //redirect them to the login page
@@ -81,7 +111,8 @@ class Planning extends CI_Controller {
 			
 		}	
 }
-}	
+}
+
 	
    public function agentplanning($id) {
 	if (!$this->ion_auth->logged_in())
