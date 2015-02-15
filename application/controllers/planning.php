@@ -50,26 +50,26 @@ class Planning extends CI_Controller {
 			show_error("You don't have permission to manage the work hours");
 		}		
 		
-	   $data['shift'] = $this->department_model->get_departments();
+	   $data['shift'] = $this->planning_model->get_work_hours();
 		$data['users'] = $this->ion_auth->users()->result();	   
 	   $this->load->vars($data);
 		
-		
-	if ($this->form_validation->run() === FALSE)
+	$this->form_validation->set_rules('shift_code', 'code', 'required');
+	$this->form_validation->set_rules('shift_start', 'Start', 'required');
+	$this->form_validation->set_rules('shift_stop', 'Stop', 'required');							
+						
+  if ($this->form_validation->run() === FALSE)
 	{
-		$this->load->view('templates/header', $data);
-		$this->load->view('planning/shifts', $data);
-		$this->load->view('templates/footer');
+		$this->load->view('templates/header', $data);	
+		$this->load->view('planning/manage_shifts', $data);
+		$this->load->view('templates/footer');	
 
 	}
 	else
-	{   $this->planning_model->set_event();		
+	{   $this->planning_model->add_work_hour();
+			redirect('planning/shifts', 'refresh');	 
+	}			
 			
-		$this->load->view('templates/header', $data);	
-		$this->load->view('planning/shifts', $data);
-		$this->load->view('templates/footer');				
-			
-		}	
 }
 	
 
