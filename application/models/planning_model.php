@@ -18,6 +18,14 @@ class Planning_model extends CI_Model {
 	return $query->row_array();
    }
    
+   
+   public function get_work_hours()
+   {
+		$query = $this->db->get('task_shifts');
+		return $query->result_array();
+	}
+   
+   
 public function get_news($id = FALSE)
 {
 	if ($id === FALSE)
