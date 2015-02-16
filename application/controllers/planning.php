@@ -38,8 +38,7 @@ class Planning extends CI_Controller {
 		}
 		else {
 				$this->load->view('templates/header');	
-		      	$this->load->view('dashboard/manager', $data);
-			
+		      $this->load->view('dashboard/manager', $data);			
 		}	
 	}
 	
@@ -68,13 +67,19 @@ class Planning extends CI_Controller {
 
 	}
 	else
-	{   $this->planning_model->add_work_hour();
-	    $this->session->set_flashdata('message','The shift has been added to the list');	
+	{ 
+	$addShift =  $this->planning_model->add_work_hour();
+	    
+	     if($addShift) {
+	     	
+	    $this->session->set_flashdata('message', lang('shift_added'));	
 			redirect('planning/shifts', 'refresh');	 
-	}			
-			
+	}else {			
+		$this->session->set_flashdata('message', lang('error_shift_exists'));
+					redirect('planning/shifts', 'refresh');	 	
 }
-
+}
+}
 	public function remove_shift($id)
 	{
 		if (!$this->ion_auth->logged_in() || !$this->ion_auth->has_permission('manage_shifts_hours'))

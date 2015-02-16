@@ -22,16 +22,12 @@
     
     <link href="<?php echo base_url("css/bootstrapValidator.css");?>" rel="stylesheet">
     <link href="<?php echo base_url("css/bootstrap-formhelpers.css")?>" rel="stylesheet" media="screen">
-    <link href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.css" rel="stylesheet">
-    <link href="//cdn.datatables.net/plug-ins/a5734b29083/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+
     <link href="<?php echo base_url("css/jquery.datetimepicker.css");?>" rel="stylesheet">
 
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
-<link href="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 
 <script src="<?php echo base_url("js/jquery.circliful.js");?>"></script>	
 
