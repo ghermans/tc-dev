@@ -48,6 +48,13 @@ class Planning_model extends CI_Model {
 }
    
    
+   public function remove_work_hour($id)
+   {
+
+   $this->db->delete('task_shifts', array('shift_id' => $id));
+   
+   }
+   
 public function get_news($id = FALSE)
 {
 	if ($id === FALSE)
