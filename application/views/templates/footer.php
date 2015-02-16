@@ -7,23 +7,13 @@
 
 <script src="http://dev.timecontrol.be/js/jquery.bootgrid.min.js"></script>
 <script src="<?php echo base_url("js/jquery-ui.min.js");?>"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment.js"></script>
 <script src="<?php echo base_url("js/jquery-listnav.min.js");?>"></script>
-<script src="<?php echo base_url("js/highcharts.js");?>"></script>
 <script src="<?php echo base_url("js/bootstrap-switch.js");?>"></script>
 <script src="<?php echo base_url("js/formToWizard.js");?>"></script>
 <script src="<?php echo base_url("js/jBox.js");?>"></script>
-<script src="<?php echo base_url("js/jquery.timeago.js");?>"></script>
-<script src="<?php echo base_url("js/modules/data.js");?>"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.1.1/fullcalendar.min.js"></script>
-<script src="<?php echo base_url("js/bootstrapValidator.js");?>"></script>
 <script src="<?php echo base_url("js/bootstrap-formhelpers.js");?>"></script>
-
-
 <script>
-
-$('.time').bfhtimepicker();
-
 	$(function() {
 		$( ".column" ).sortable({
 			connectWith: ".column",
@@ -78,6 +68,5 @@ $(document).ready(function() {
     $("[name='config-planning']").bootstrapSwitch();
     $("[name='config-vacation']").bootstrapSwitch(); 	
 	});
-  
 </script>
 </html>
