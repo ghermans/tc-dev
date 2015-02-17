@@ -19,7 +19,7 @@ $lang['confirm_task_added']    = 'The task type has been created.';
 
 $lang['task_heading']         = 'Manage tasks';
 $lang['task_subheading']      = 'Below is a list with all the task types.';
-$lang['task_code']            = 'Task type';
+$lang['task_type']            = 'Task type';
 $lang['task_start']           = 'Start between';
 $lang['task_stop']            = 'Stop between';
 $lang['task_submit']          = 'Save settings';
