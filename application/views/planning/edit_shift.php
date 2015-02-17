@@ -23,9 +23,14 @@
 						<div class="col-md-4">
 							<input type="text" name="shift_stop" id="shift_stop" value="<?php echo $shift['shift_end'];?>" class="form-control"> </div>
 						</div>
-					
-
-        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('shifts_cancel');?></button>
+						
+					<div class="form-group">
+					<label for="shift_start" class="col-sm-3 control-label"></label>
+					<div class="col-md-4">
         <button type="submit" class="btn btn-primary"><?php echo lang('shifts_submit');?></button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('shifts_cancel');?></button>
+      </div>
+      </div>
+      
       </div>
       <?php echo form_close();?>
