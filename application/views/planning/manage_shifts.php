@@ -32,7 +32,7 @@
   <td><?php echo $shift_item['shift_code'];?></td>
   <td class="text-center"><?php echo $shift_item['shift_start'];?></td>
   <td class="text-center"><?php echo $shift_item['shift_end'];?></td>
-  <td class="text-center"><a href=""><i class="fa fa-pencil"></i></a> <a href="<?php echo base_url("planning/remove_shift/".$shift_item['shift_id']."");?>"><i class="glyphicon glyphicon-remove"></i></a></td>
+  <td class="text-center"><a href="<?php echo base_url("planning/edit_shift/".$shift_item['shift_id']."");?>"><i class="fa fa-pencil"></i></a> <a href="<?php echo base_url("planning/remove_shift/".$shift_item['shift_id']."");?>"><i class="glyphicon glyphicon-remove"></i></a></td>
   </tr>
   <?php endforeach ?> 
 </tbody>

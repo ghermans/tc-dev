@@ -19,10 +19,17 @@ class Planning_model extends CI_Model {
    }
    
    
-   public function get_work_hours()
+   public function get_work_hours($id = FALSE)
    {
+   	if ($id === FALSE)
+	{
 		$query = $this->db->get('task_shifts');
 		return $query->result_array();
+	}
+	else {
+	   $query = $this->db->get_where('task_shifts', array('shift_id' => $id));
+		return $query->row_array();
+	}
 	}
 	
 	public function add_work_hour()
@@ -46,8 +53,19 @@ class Planning_model extends CI_Model {
    	
   }
 }
+
+ public function edit_work_hour($id) { 
    
-   
+   $data = array(
+		'shift_code' =>  $this->input->post('shift_code'),
+		'shift_start' => $this->input->post('shift_start'),
+		'shift_end' =>   $this->input->post('shift_stop')
+	); 
+
+   $this->db->where('shift_id', $id);
+   return $this->db->update('task_shifts', $data); 
+}  
+
    public function remove_work_hour($id)
    {
 

@@ -80,6 +80,51 @@ class Planning extends CI_Controller {
 }
 }
 }
+
+
+
+	public function edit_shift($id)
+	{
+
+		if (!$this->ion_auth->logged_in() || !$this->ion_auth->has_permission('manage_shifts_hours'))
+		{
+			show_error("You don't have permission to manage the work hours");
+		}		
+
+
+		
+	$this->form_validation->set_rules('shift_code', 'code', 'required');
+	$this->form_validation->set_rules('shift_start', 'Start', 'required');
+	$this->form_validation->set_rules('shift_stop', 'Stop', 'required');							
+
+	  $data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');		
+	  $data['shift'] = $this->planning_model->get_work_hours($id);
+
+	  $data['users'] = $this->ion_auth->users()->result();	   
+	  $this->load->vars($data);
+						
+  if ($this->form_validation->run() === FALSE)
+	{
+		$this->load->view('templates/header', $data);	
+		$this->load->view('planning/edit_shift', $data);
+		$this->load->view('templates/footer');	
+
+	}
+	else
+	{ 
+	$addShift =  $this->planning_model->edit_work_hour($id);
+	    
+	     if($addShift) {
+	     	
+	    $this->session->set_flashdata('message', 'Query is ok');	
+			redirect('planning/shifts', 'refresh');	 
+	}else {			
+		$this->session->set_flashdata('message', 'There is a issue... please fix it');
+					redirect('planning/shifts', 'refresh');	 	
+}
+}
+}
+
 	public function remove_shift($id)
 	{
 		if (!$this->ion_auth->logged_in() || !$this->ion_auth->has_permission('manage_shifts_hours'))
