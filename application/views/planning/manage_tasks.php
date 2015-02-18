@@ -18,12 +18,10 @@
 <div class="row">
 <div class="col-md-12">
 
-
-
 <table class="table table-bordered table-striped table-responsive">
 <thead>
 <tr>
-  <th><?php echo lang('task_code');?></th>
+  <th><?php echo lang('task_type');?></th>
   <th class="text-center"><?php echo lang('task_start');?></th>
   <th class="text-center"><?php echo lang('task_stop');?></th>
   <th class="col-md-1 text-center">&nbsp;</th>
@@ -40,7 +38,6 @@
   <?php endforeach ?> 
 </tbody>
 </table>
-
 </div>
 
 <div class="modal" id="addshift" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -54,7 +51,7 @@
       <div class="modal-body">
 
 					<div class="form-group">
-						<label for="task_type" class="col-sm-3 control-label"><?php echo lang('task_code');?></label>
+						<label for="task_type" class="col-sm-3 control-label"><?php echo lang('task_type');?></label>
 						<div class="col-md-6">
 							<input type="text" name="task_type" class="form-control" id="task_type">
 						</div>
