@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Machine: localhost:3306
--- Gegenereerd op: 17 feb 2015 om 04:21
+-- Gegenereerd op: 18 feb 2015 om 20:42
 -- Serverversie: 5.5.41-0+wheezy1
--- PHP-versie: 5.5.14
+-- PHP-versie: 5.5.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -34,16 +34,6 @@ CREATE TABLE IF NOT EXISTS `ci_sessions` (
   `user_data` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Gegevens worden geëxporteerd voor tabel `ci_sessions`
---
-
-INSERT INTO `ci_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity`, `user_data`) VALUES
-('0197e8103994fcc2a9754b0227ac769e', '66.249.73.196', 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)', 1424140909, ''),
-('856ff2c4f3673ad63236cd5f33d84340', '84.194.119.116', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.111 Safari/537.36', 1424142913, 'a:6:{s:9:"user_data";s:0:"";s:8:"identity";s:15:"admin@admin.com";s:8:"username";s:13:"administrator";s:5:"email";s:15:"admin@admin.com";s:7:"user_id";s:1:"1";s:14:"old_last_login";s:10:"1424097804";}'),
-('b4694922be1f70f20dc52ed90bddd6a3', '66.249.73.188', 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)', 1424140908, ''),
-('b753fdfbc74611d8b02b77279f5bb6d1', '173.246.106.126', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.110 Safari/537.36', 1424134993, '');
-
 -- --------------------------------------------------------
 
 --
@@ -57,15 +47,6 @@ CREATE TABLE IF NOT EXISTS `departments` (
   `department_created` datetime NOT NULL
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
---
--- Gegevens worden geëxporteerd voor tabel `departments`
---
-
-INSERT INTO `departments` (`department_id`, `department_name`, `department_manager`, `department_created`) VALUES
-(1, 'Administration', 1, '2014-12-14 13:49:00'),
-(4, 'Technical support', 1, '0000-00-00 00:00:00'),
-(5, 'Sales', 1, '0000-00-00 00:00:00');
-
 -- --------------------------------------------------------
 
 --
@@ -78,16 +59,6 @@ CREATE TABLE IF NOT EXISTS `groups` (
   `description` varchar(100) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
---
--- Gegevens worden geëxporteerd voor tabel `groups`
---
-
-INSERT INTO `groups` (`id`, `name`, `description`) VALUES
-(1, 'admin', 'Administrator'),
-(2, 'agents', 'General User'),
-(3, 'teamcoach', 'Default team coach role'),
-(4, 'manager', 'Default manager');
-
 -- --------------------------------------------------------
 
 --
@@ -98,45 +69,7 @@ CREATE TABLE IF NOT EXISTS `groups_permissions` (
 `id` int(11) unsigned NOT NULL,
   `group_id` mediumint(8) unsigned NOT NULL,
   `permission_id` mediumint(8) unsigned NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=110 ;
-
---
--- Gegevens worden geëxporteerd voor tabel `groups_permissions`
---
-
-INSERT INTO `groups_permissions` (`id`, `group_id`, `permission_id`) VALUES
-(109, 1, 1),
-(108, 1, 2),
-(107, 1, 3),
-(106, 1, 4),
-(105, 1, 5),
-(104, 1, 6),
-(103, 1, 7),
-(102, 1, 8),
-(101, 1, 9),
-(100, 1, 11),
-(99, 1, 12),
-(98, 1, 13),
-(97, 1, 14),
-(96, 1, 15),
-(95, 1, 16),
-(94, 2, 10),
-(28, 3, 1),
-(27, 3, 2),
-(26, 3, 3),
-(25, 3, 4),
-(24, 3, 9),
-(23, 3, 11),
-(22, 3, 12),
-(79, 4, 1),
-(78, 4, 2),
-(77, 4, 3),
-(76, 4, 4),
-(75, 4, 6),
-(74, 4, 8),
-(73, 4, 9),
-(72, 4, 11),
-(71, 4, 12);
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=126 ;
 
 -- --------------------------------------------------------
 
@@ -168,19 +101,6 @@ CREATE TABLE IF NOT EXISTS `messages` (
   `status` int(11) NOT NULL
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
---
--- Gegevens worden geëxporteerd voor tabel `messages`
---
-
-INSERT INTO `messages` (`message_id`, `sender`, `reciever`, `subject`, `message`, `date_send`, `date_read`, `status`) VALUES
-(1, 1, 11, 'Dit is een test bericht', 'jhkhlkjhkjhlkhkjhkjh', '2014-12-24 02:44:00', '2014-12-24 02:44:00', 2),
-(2, 1, 11, 'Demo onderwerp', 'Ik wil u niet dood ! \r\nMaar wel stoned :D\r\n', '2014-12-24 02:44:00', '2014-12-24 02:44:00', 2),
-(3, 1, 0, '0', '0', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
-(4, 1, 0, '0', '0', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
-(5, 1, 1, '0', '0', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
-(6, 1, 1, 'Second message send with timecontrol', 'second demo message.', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
-(7, 1, 1, 'Third message send with timecontrol', 'Third demo message.', '2014-12-24 05:56:39', '0000-00-00 00:00:00', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -191,29 +111,7 @@ CREATE TABLE IF NOT EXISTS `permissions` (
 `id` mediumint(8) unsigned NOT NULL,
   `name` varchar(50) NOT NULL,
   `description` varchar(100) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
-
---
--- Gegevens worden geëxporteerd voor tabel `permissions`
---
-
-INSERT INTO `permissions` (`id`, `name`, `description`) VALUES
-(1, 'create_user', 'Create new user'),
-(2, 'edit_user', 'Edit user details'),
-(3, 'change_user_state', 'Activate/Deactivate User'),
-(4, 'view_all_users', 'View all users'),
-(5, 'create_users_groups', 'Create users groups'),
-(6, 'edit_users_groups', 'Edit users groups'),
-(7, 'create_group_permissions', 'Create group permissions'),
-(8, 'edit_group_permissions', 'Edit group permissions'),
-(9, 'task_request', 'Request a new task for any user.'),
-(10, 'take_break', 'Allow user to take break'),
-(11, 'manage_breaks', 'Manage breaks'),
-(12, 'create_report', 'Create Report'),
-(13, 'create_task_item', 'Create a new task item'),
-(14, 'create_task', 'Create a new task'),
-(15, 'view_all_reports', 'View all reports'),
-(16, 'manage_shifts_hours', 'Manage shifts');
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
 
 -- --------------------------------------------------------
 
@@ -230,13 +128,6 @@ CREATE TABLE IF NOT EXISTS `planning_employee` (
   `planning_user` int(11) NOT NULL,
   `date_requested` datetime NOT NULL
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- Gegevens worden geëxporteerd voor tabel `planning_employee`
---
-
-INSERT INTO `planning_employee` (`planning_id`, `planning_title`, `planning_start`, `planning_stop`, `planning_color`, `planning_user`, `date_requested`) VALUES
-(1, 'Inbound', '2014-12-24 08:00:00', '2014-12-24 08:30:00', 0, 1, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -264,14 +155,18 @@ CREATE TABLE IF NOT EXISTS `task_shifts` (
   `shift_end` time NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
+-- --------------------------------------------------------
+
 --
--- Gegevens worden geëxporteerd voor tabel `task_shifts`
+-- Tabelstructuur voor tabel `task_types`
 --
 
-INSERT INTO `task_shifts` (`shift_id`, `shift_code`, `shift_start`, `shift_end`) VALUES
-(6, 'V33', '13:30:00', '22:00:00'),
-(10, 'V10', '08:00:00', '16:30:00'),
-(12, 'N10', '12:30:00', '20:30:00');
+CREATE TABLE IF NOT EXISTS `task_types` (
+`task_id` int(11) NOT NULL,
+  `task_type` varchar(90) NOT NULL,
+  `task_min` time NOT NULL,
+  `task_max` time NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -285,14 +180,6 @@ CREATE TABLE IF NOT EXISTS `teams` (
   `teams_department` int(11) NOT NULL,
   `teams_coach` int(11) NOT NULL
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
-
---
--- Gegevens worden geëxporteerd voor tabel `teams`
---
-
-INSERT INTO `teams` (`teams_id`, `teams_name`, `teams_department`, `teams_coach`) VALUES
-(1, 'Tina', 1, 1),
-(2, 'Team2', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -324,15 +211,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   `mobile` int(11) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
---
--- Gegevens worden geëxporteerd voor tabel `users`
---
-
-INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `address`, `zipcode`, `city`, `phone`, `mobile`) VALUES
-(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, 's8MTPu4IOWzyCVZuunR0YO', 1268889823, 1424134807, 1, 'iDevelopment', 'Administrator', 'ADMIN', '', 0, '', '0', 0),
-(2, '84.194.119.116', 'glenn hermans', '$2y$08$l8YmF66DJSmdKRD1KC0zpuMfV92uTQdGyfnlxuq3y8qYuY/oPvkaa', NULL, 'glenn.hermans@unixtrip.org', '3de4905ea2ef89ca0e752c4104246c165358ce44', NULL, NULL, NULL, 1423700100, NULL, 0, 'Glenn', 'Hermans', 'iDevelopment', '', 0, '', '+32', 0),
-(3, '84.194.119.116', 'testplein manager', '$2y$08$qJnzwF5ELe1lHEN8Jnhz0OzfXo0ob5mHa6QuNnBM5CAGLz8HKwwyS', NULL, 'glenn.hermans@idevelopment.be', NULL, NULL, NULL, NULL, 1423755457, NULL, 1, 'Testplein', 'Manager', 'iDevelopment', '', 0, '', '+32', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -344,15 +222,6 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
   `user_id` int(11) unsigned NOT NULL,
   `group_id` mediumint(8) unsigned NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
-
---
--- Gegevens worden geëxporteerd voor tabel `users_groups`
---
-
-INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
-(6, 1, 1),
-(3, 2, 2),
-(4, 3, 2);
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -419,6 +288,12 @@ ALTER TABLE `task_shifts`
  ADD PRIMARY KEY (`shift_id`);
 
 --
+-- Indexen voor tabel `task_types`
+--
+ALTER TABLE `task_types`
+ ADD PRIMARY KEY (`task_id`);
+
+--
 -- Indexen voor tabel `teams`
 --
 ALTER TABLE `teams`
@@ -454,7 +329,7 @@ MODIFY `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT voor een tabel `groups_permissions`
 --
 ALTER TABLE `groups_permissions`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=110;
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=126;
 --
 -- AUTO_INCREMENT voor een tabel `login_attempts`
 --
@@ -469,7 +344,7 @@ MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 -- AUTO_INCREMENT voor een tabel `permissions`
 --
 ALTER TABLE `permissions`
-MODIFY `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+MODIFY `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT voor een tabel `planning_employee`
 --
@@ -485,6 +360,11 @@ MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 ALTER TABLE `task_shifts`
 MODIFY `shift_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+--
+-- AUTO_INCREMENT voor een tabel `task_types`
+--
+ALTER TABLE `task_types`
+MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT voor een tabel `teams`
 --
