@@ -218,6 +218,21 @@ class Planning extends CI_Controller {
 }
 }
 
+	public function remove_task($id)
+	{
+		if (!$this->ion_auth->logged_in() || !$this->ion_auth->has_permission('manage_task_types'))
+		{
+			show_error("You don't have permission to remove this item");
+		}		
+
+	  else
+	   {   $this->planning_model->remove_task_type($id);
+	   		$this->session->set_flashdata('message','The task has been removed');
+			redirect('planning/shifts', 'refresh');	 
+	   }			
+    }
+    
+
 	public function backup_shifts()
 	{
 		if (!$this->ion_auth->logged_in())

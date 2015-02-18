@@ -120,6 +120,12 @@ public function get_tasks($id = FALSE)
 } 
 
 
+  public function remove_task_type($id)
+   {
+   $this->db->delete('task_types', array('task_types' => $id));
+   }
+
+
 function jsonEvents($id)
 {
     $query = $this->db->query("SELECT * FROM planning_user where userid = $id ORDER BY start ASC");
