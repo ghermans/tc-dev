@@ -122,7 +122,7 @@ public function get_tasks($id = FALSE)
 
   public function remove_task_type($id)
    {
-   $this->db->delete('task_types', array('task_types' => $id));
+   $this->db->delete('task_types', array('task_id' => $id));
    }
 
 
