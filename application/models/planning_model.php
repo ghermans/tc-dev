@@ -107,7 +107,17 @@ public function get_tasks($id = FALSE)
 	return $query->row_array();
 }
 
+ public function edit_task_type($id) { 
+   
+   $data = array(
+		'task_type' =>  $this->input->post('task_type'),
+		'task_min'  =>  $this->input->post('task_start'),
+		'task_max'  =>  $this->input->post('task_stop')
+	); 
 
+   $this->db->where('task_id', $id);
+   return $this->db->update('task_types', $data); 
+} 
 
 
 function jsonEvents($id)

@@ -180,6 +180,43 @@ class Planning extends CI_Controller {
 }
 
 
+	public function edit_task($id)
+	{
+		if (!$this->ion_auth->logged_in() || !$this->ion_auth->has_permission('manage_tasks_types'))
+		{
+			show_error("You don't have permission to manage the tasks types");
+		}		
+		
+	  $data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');		
+	  $data['task'] = $this->planning_model->get_tasks($id);
+	  $data['users'] = $this->ion_auth->users()->result();	   
+	  $this->load->vars($data);
+		
+	$this->form_validation->set_rules('task_type', 'Type', 'required');
+	$this->form_validation->set_rules('task_start', 'Start', 'required');
+	$this->form_validation->set_rules('task_stop', 'Stop', 'required');							
+						
+  if ($this->form_validation->run() === FALSE)
+	{
+		$this->load->view('templates/header', $data);	
+		$this->load->view('planning/edit_tasks_types', $data);
+		$this->load->view('templates/footer');	
+
+	}
+	else
+	{ 
+	$addShift =  $this->planning_model->edit_task_type($id);
+	    
+	     if($addShift) {
+	     	
+	    $this->session->set_flashdata('message', lang('confirm_task_added'));	
+			redirect('planning/tasks', 'refresh');	 
+	}else {			
+		
+		   redirect('planning/tasks', 'refresh');	 	
+}
+}
+}
 
 	public function backup_shifts()
 	{
