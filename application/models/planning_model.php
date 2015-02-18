@@ -79,46 +79,32 @@ class Planning_model extends CI_Model {
 	$this->load->helper('url');
 
 	
-    $this->db->where('shift_start', $this->input->post('shift_start'));
-    $this->db->where('shift_end', $this->input->post('shift_stop'));    
-    $query = $this->db->get('task_shifts');
+    $this->db->where('task_type', $this->input->post('task_type')); 
+    $query = $this->db->get('task_types');
     if ($query->num_rows() > 0){
 	        return false;
     }
     else{
    $data = array(
-		'shift_code' =>  $this->input->post('shift_code'),
-		'shift_start' => $this->input->post('shift_start'),
-		'shift_end' =>   $this->input->post('shift_stop')
+		'task_type' =>  $this->input->post('task_type'),
+		'task_min' => $this->input->post('task_start'),
+		'task_max' =>   $this->input->post('task_stop')
 	); 
-  	return $this->db->insert('task_shifts', $data);
+  	return $this->db->insert('task_types', $data);
    	
   }
 }
    
-public function get_news($id = FALSE)
+public function get_tasks($id = FALSE)
 {
 	if ($id === FALSE)
 	{
-		$query = $this->db->get('planning_user');
+		$query = $this->db->get('task_types');
 		return $query->result_array();
 	}
 
-	$query = $this->db->get_where('planning_user', array('userid' => $id));
-    $jsonevents = array();
-
-    foreach($query->result() as $entry)
-    {
-        $jsonevents[] = array(
-            'id' => $entry->id,
-            'title' => $entry->title,
-            'start' => $entry->start,
-            'end' => $entry->end,
-            'color' => $entry->color
-        ); 
-    }
-
-    $data['json'] = json_encode($jsonevents);
+	$query = $this->db->get_where('task_types', array('task_id' => $id));
+	return $query->row_array();
 }
 
 

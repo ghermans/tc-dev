@@ -25,5 +25,5 @@ $lang['task_stop']            = 'Stop between';
 $lang['task_submit']          = 'Save settings';
 $lang['task_cancel']          = 'Cancel';
 
-$lang['task_button_new']      = 'Create a new task:';
-$lang['task_modal_title']     = 'Create a new task:';
+$lang['task_button_new']      = 'Create a new task';
+$lang['task_modal_title']     = 'Create a new task';

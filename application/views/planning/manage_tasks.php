@@ -4,7 +4,7 @@
 
 <div class="clearfix">&nbsp;</div>
 
-<p><button type="button" class="btn btn-success" data-toggle="modal" data-target="#addshift">Add task</button> </p>
+<p><button type="button" class="btn btn-success" data-toggle="modal" data-target="#addshift"><?php echo lang('task_button_new') ?></button> </p>
 <?php if(!empty($message)) { ?>
 <div class="row">
 <div class="col-md-12">
@@ -17,6 +17,9 @@
 <div class="clearfix">&nbsp;</div>
 <div class="row">
 <div class="col-md-12">
+
+
+
 <table class="table table-bordered table-striped table-responsive">
 <thead>
 <tr>
@@ -29,50 +32,48 @@
 <tbody>
     <?php foreach ($task as $task_item):?>
 <tr>
-  <td><?php echo $task_item['shift_code'];?></td>
-  <td class="text-center"><?php echo $task_item['shift_start'];?></td>
-  <td class="text-center"><?php echo $task_item['shift_end'];?></td>
-  <td class="text-center"><a href="<?php echo base_url("planning/edit_task/".$task_item['shift_id']."");?>"><i class="fa fa-pencil"></i></a> <a href="<?php echo base_url("planning/remove_task/".$task_item['shift_id']."");?>"><i class="glyphicon glyphicon-remove"></i></a></td>
+  <td><?php echo $task_item['task_type'];?></td>
+  <td class="text-center"><?php echo $task_item['task_min'];?></td>
+  <td class="text-center"><?php echo $task_item['task_max'];?></td>
+  <td class="text-center"><a href="<?php echo base_url("planning/edit_task/".$task_item['task_id']."");?>"><i class="fa fa-pencil"></i></a> <a href="<?php echo base_url("planning/remove_task/".$task_item['task_id']."");?>"><i class="glyphicon glyphicon-remove"></i></a></td>
   </tr>
   <?php endforeach ?> 
 </tbody>
-
 </table>
 
 </div>
 
-<div class="modal fade" id="addshift" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal" id="addshift" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="glyphicon glyphicon-remove"></i></span></button>
-        <h4 class="modal-title" id="myModalLabel">Add shift</h4>
+        <h4 class="modal-title" id="myModalLabel"><?php echo lang('task_modal_title') ?></h4>
       </div>
         <?php echo form_open('', 'class="form-horizontal"');?>
       <div class="modal-body">
 
 					<div class="form-group">
-						<label for="shift_code" class="col-sm-3 control-label"><?php echo lang('task_code');?></label>
-						
+						<label for="task_type" class="col-sm-3 control-label"><?php echo lang('task_code');?></label>
 						<div class="col-md-6">
-							<input type="text" name="shift_code" class="form-control" value="" id="shift_code">
+							<input type="text" name="task_type" class="form-control" id="task_type">
 						</div>
 					</div>
 
 	            <hr>
 					
 					<div class="form-group">
-						<label for="shift_start" class="col-sm-3 control-label"><?php echo lang('task_start');?></label>
+						<label for="task_start" class="col-sm-3 control-label"><?php echo lang('task_start');?></label>
 						
 						<div class="col-md-6">
-                  <input type="text" name="task_cstart" id="time" class="form-control"> </div>
+                  <input type="text" name="task_start" id="task_start" class="form-control"> </div>
 						</div>
 
 					
 					<div class="form-group">
-						<label for="shift_stop" class="col-sm-3 control-label"><?php echo lang('task_stop');?></label>
+						<label for="task_stop" class="col-sm-3 control-label"><?php echo lang('task_stop');?></label>
 						<div class="col-md-6">
-							<input type="text" name="task_cstop" id="shift_stop" class="form-control"> </div>
+							<input type="text" name="task_stop" id="task_stop" class="form-control"> </div>
 						</div>
 					
     </div>

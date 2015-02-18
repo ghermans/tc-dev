@@ -149,13 +149,13 @@ class Planning extends CI_Controller {
 		}		
 		
 	  $data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');		
-	  $data['task'] = $this->planning_model->get_work_hours();
+	  $data['task'] = $this->planning_model->get_tasks();
 	  $data['users'] = $this->ion_auth->users()->result();	   
 	  $this->load->vars($data);
 		
 	$this->form_validation->set_rules('task_type', 'Type', 'required');
-	$this->form_validation->set_rules('task_cstart', 'Start', 'required');
-	$this->form_validation->set_rules('task_cstop', 'Stop', 'required');							
+	$this->form_validation->set_rules('task_start', 'Start', 'required');
+	$this->form_validation->set_rules('task_stop', 'Stop', 'required');							
 						
   if ($this->form_validation->run() === FALSE)
 	{
@@ -170,10 +170,10 @@ class Planning extends CI_Controller {
 	    
 	     if($addShift) {
 	     	
-	    $this->session->set_flashdata('message', lang('shift_added'));	
+	    $this->session->set_flashdata('message', lang('confirm_task_added'));	
 			redirect('planning/tasks', 'refresh');	 
 	}else {			
-		$this->session->set_flashdata('message', lang('error_shift_exists'));
+		
 		   redirect('planning/tasks', 'refresh');	 	
 }
 }
