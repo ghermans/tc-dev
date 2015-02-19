@@ -220,7 +220,7 @@ class Planning extends CI_Controller {
 
 	public function remove_task($id)
 	{
-		if (!$this->ion_auth->logged_in() || !$this->ion_auth->has_permission('manage_task_types'))
+		if (!$this->ion_auth->logged_in() || !$this->ion_auth->has_permission('manage_tasks_types'))
 		{
 			show_error("You don't have permission to remove this item");
 		}		
@@ -228,12 +228,12 @@ class Planning extends CI_Controller {
 	  else
 	   {   $this->planning_model->remove_task_type($id);
 	   		$this->session->set_flashdata('message','The task has been removed');
-			redirect('planning/shifts', 'refresh');	 
+			redirect('planning/tasks', 'refresh');	 
 	   }			
     }
     
 
-	public function backup_shifts()
+	public function request_tasks()
 	{
 		if (!$this->ion_auth->logged_in())
 		{
@@ -258,7 +258,7 @@ class Planning extends CI_Controller {
 	if ($this->form_validation->run() === FALSE)
 	{
 		$this->load->view('templates/header', $data);
-		$this->load->view('planning/shifts', $data);
+		$this->load->view('planning/control_tasks', $data);
 		$this->load->view('templates/footer');
 
 	}
@@ -266,7 +266,47 @@ class Planning extends CI_Controller {
 	{   $this->planning_model->set_event();		
 			
 		$this->load->view('templates/header', $data);	
-		$this->load->view('planning/shifts', $data);
+		$this->load->view('planning/control_tasks', $data);
+		$this->load->view('templates/footer');				
+			
+		}	
+}
+}
+
+	public function control_tasks()
+	{
+		if (!$this->ion_auth->logged_in())
+		{
+		  //redirect them to the login page
+		  redirect('auth/login', 'refresh');
+		}
+		
+	   $data['department'] = $this->department_model->get_departments();
+		$data['users'] = $this->ion_auth->users()->result();	   
+	   $this->load->vars($data);
+		
+		if (!$this->ion_auth->in_group(1))
+		{
+		//	 $this->load->view('templates/sidebar/teamcoach');	
+			
+		}
+		else {
+		$this->form_validation->set_rules('event', 'Event', 'required');
+	   $this->form_validation->set_rules('start', 'start', 'required');
+		$this->form_validation->set_rules('start', 'stop', 'required');
+
+	if ($this->form_validation->run() === FALSE)
+	{
+		$this->load->view('templates/header', $data);
+		$this->load->view('planning/control_tasks', $data);
+		$this->load->view('templates/footer');
+
+	}
+	else
+	{   $this->planning_model->set_event();		
+			
+		$this->load->view('templates/header', $data);	
+		$this->load->view('planning/control_tasks', $data);
 		$this->load->view('templates/footer');				
 			
 		}	
