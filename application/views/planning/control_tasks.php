@@ -20,12 +20,20 @@
         <div class="col-md-3">
             <div class="panel panel-default">
                 <div class="panel-body">
-                     <h4 class="">Open tasks request</h4>
-                    <div class="list-group">
-<a href="#" class="list-group-item">Project - Glenn Hermans </a>
-<a href="#" class="list-group-item"> Project - Glenn Hermans</a>
-                                                                                              
-                    </div>
+     <div id="myStat"
+          data-text="30"
+          data-type="full"
+          data-info="New tasks"
+          data-fontsize="35"
+          data-fgcolor="#f89406"
+          data-bgcolor="#eee"
+          data-fill="#ffffff"
+          data-total="100"
+          data-part="60"
+          data-animationstep="0"  
+          data-bordersize="20"
+          style="margin-left:50px;">
+      </div>
                     
                 </div>
             </div>
@@ -34,12 +42,20 @@
         <div class="col-md-3">
             <div class="panel panel-default">
                 <div class="panel-body">
-                     <h4 class="">Tasks in progress</h4>
-                    <div class="list-group">
-<a href="#" class="list-group-item">Project - Glenn Hermans </a>
-<a href="#" class="list-group-item"> Project - Glenn Hermans</a>
-                                                                                                  
-                    </div>
+     <div id="myStat2"
+          data-text="30"
+          data-type="full"
+          data-info="Approved tasks"
+          data-fontsize="35"
+          data-fgcolor="#469408"
+          data-bgcolor="#eee"
+          data-fill="#ffffff"
+          data-total="100"
+          data-part="60"
+          data-animationstep="0"  
+          data-bordersize="20"
+          style="margin-left:50px;">
+      </div>
                     
                 </div>
             </div>
@@ -48,12 +64,20 @@
         <div class="col-md-3">
             <div class="panel panel-default">
                 <div class="panel-body">
-                     <h4 class="">Declined tasks</h4>
-                    <div class="list-group">
-      
-<a href="#" class="list-group-item">Project - Glenn Hermans </a>
-<a href="#" class="list-group-item"> Project - Glenn Hermans</a>                                                                                                  
-                    </div>
+     <div id="myStat3"
+          data-text="30"
+          data-type="full"
+          data-info="Declined tasks"
+          data-fontsize="35"
+          data-fgcolor="#d9230f"
+          data-bgcolor="#eee"
+          data-fill="#ffffff"
+          data-total="100"
+          data-part="60"
+          data-animationstep="0"  
+          data-bordersize="20"
+          style="margin-left:50px;">          
+      </div>
                     
                 </div>
             </div>
@@ -62,12 +86,19 @@
         <div class="col-md-3">
             <div class="panel panel-default">
                 <div class="panel-body">
-                     <h4 class="">Approved tasks</h4>
-                    <div class="list-group">
-<a href="#" class="list-group-item">Project - Glenn Hermans </a>
-<a href="#" class="list-group-item"> Project - Glenn Hermans</a>
-    </a>                                                                                                   
-                    </div>
+     <div id="myStat4"
+          data-text="30"
+          data-type="full"
+          data-info="New tasks"
+          data-fontsize="35"
+          data-fgcolor="#d9230f"
+          data-bgcolor="#eee"
+          data-fill="#ffffff"
+          data-total="100"
+          data-part="60"
+          data-animationstep="0"  
+          data-bordersize="20">
+      </div>
                     
                 </div>
             </div>
@@ -78,14 +109,11 @@
    
 <div class="row">
 <div class="col-md-12">
-<?php
 
-print_r($task);
-?>
 <div class="panel panel-info">
 <div class="panel-heading">Details</div>
 <div class="panel-body">
- <table class="table table-hover table-responsive">
+ <table class="table table-bordered table-hover table-responsive">
   <thead>
     <tr>
      <th>Task id</th>
@@ -106,8 +134,8 @@ print_r($task);
      <td><?php echo $task_item['task_type'];?></td>
      <td><?php echo $task_item['request_start'];?></td>
      <td><?php echo $task_item['request_stop'];?></td>
-     <td><a href="#">Glenn Hermans</a></td>
-     <td><a href="#">Glenn Hermans</a></td>
+     <td><a href="#"><?php echo $task_item['first_name'];?> <?php echo $task_item['last_name'];?></a></td>
+     <td><a href="#"><?php echo $task_item['first_name'];?> <?php echo $task_item['last_name'];?></a></td>
      <td><p class="badge label label-success">Open</p></td>
     </tr> 
     
