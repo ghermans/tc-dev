@@ -78,6 +78,10 @@
    
 <div class="row">
 <div class="col-md-12">
+<?php
+
+print_r($task);
+?>
 <div class="panel panel-info">
 <div class="panel-heading">Details</div>
 <div class="panel-body">
@@ -95,28 +99,19 @@
     </tr>  
   </thead>
   <tbody>
-     
+       <?php foreach ($task as $task_item):?>  
      <tr>
-     <td><a href="">#2</a></td>
+     <td><a href="">#<?php echo $task_item['request_id'];?></a></td>
      <td>19/03/2015 07:00</td>
-     <td>Project</td>
-     <td>08:00</td>
-     <td>16:00</td>
+     <td><?php echo $task_item['task_type'];?></td>
+     <td><?php echo $task_item['request_start'];?></td>
+     <td><?php echo $task_item['request_stop'];?></td>
      <td><a href="#">Glenn Hermans</a></td>
      <td><a href="#">Glenn Hermans</a></td>
      <td><p class="badge label label-success">Open</p></td>
     </tr> 
     
-     <tr>
-     <td><a href="">#1</a></td>
-     <td>19/03/2015 07:00</td>
-     <td>Project</td>
-     <td>08:00</td>
-     <td>16:00</td>
-     <td><a href="#">Glenn Hermans</a></td>
-     <td><a href="#">Glenn Hermans</a></td>
-     <td><p class="badge progress-bar-danger">Declined</p></td>
-    </tr>    
+       <?php endforeach ?> 
   </tbody>
  
  </table>

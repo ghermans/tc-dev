@@ -280,7 +280,8 @@ class Planning extends CI_Controller {
 		  //redirect them to the login page
 		  redirect('auth/login', 'refresh');
 		}
-		
+	   
+	   $data['task'] = $this->planning_model->get_tasks_requests();
 	   $data['department'] = $this->department_model->get_departments();
 		$data['users'] = $this->ion_auth->users()->result();	   
 	   $this->load->vars($data);

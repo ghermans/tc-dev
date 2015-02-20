@@ -145,6 +145,19 @@ function jsonEvents($id)
     $data['json'] = json_encode($jsonevents);
 }   
 
+
+
+public function get_tasks_requests()
+{
+
+		$this->db->select('*');
+      $this->db->from('task_requests');
+		$this->db->join('task_types','task_types.task_id = task_requests.request_type');
+		$query = $this->db->get();
+		return $query->result_array();
+}
+
+
    public function create_department()
    {
 	$this->load->helper('url');
