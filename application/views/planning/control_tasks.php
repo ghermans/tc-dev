@@ -1,8 +1,21 @@
 <div class="page-header"> 
  <h2>Request tasks</h2>
 </div>
-<div class="clearfix">&nbsp;</div>
+<p><button type="button" class="btn btn-success" data-toggle="modal" data-target="#addshift"><?php echo lang('task_button_new') ?></button> </p>
 
+<div class="clearfix">&nbsp;</div>
+<?php if(!empty($message)) { ?>
+
+<div class="row">
+<div class="col-md-12">
+<div class="alert alert-info">
+<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+<p><?php echo $message;?></p></div>
+</div>
+</div>
+
+<?php } ?>
+<div class="clearfix">&nbsp;</div>
     <div class="row">
         <div class="col-md-3">
             <div class="panel panel-default">
@@ -77,7 +90,7 @@
      <th>Task starts</th>
      <th>Task ends</th>
      <th>Assigned to</th>
-     <th>Updated by</th>     
+     <th>Requested by</th>     
      <th>Status</th>
     </tr>  
   </thead>
@@ -89,9 +102,9 @@
      <td>Project</td>
      <td>08:00</td>
      <td>16:00</td>
-     <td>Glenn Hermans</td>
-     <td>Michiel Bellen</td>
-     <td><p class="label label-success">Open</p></td>
+     <td><a href="#">Glenn Hermans</a></td>
+     <td><a href="#">Glenn Hermans</a></td>
+     <td><p class="badge label label-success">Open</p></td>
     </tr> 
     
      <tr>
@@ -100,9 +113,9 @@
      <td>Project</td>
      <td>08:00</td>
      <td>16:00</td>
-     <td>Glenn Hermans</td>
-     <td>Michiel Bellen</td>
-     <td><p class="label label-danger">Declined</p></td>
+     <td><a href="#">Glenn Hermans</a></td>
+     <td><a href="#">Glenn Hermans</a></td>
+     <td><p class="badge progress-bar-danger">Declined</p></td>
     </tr>    
   </tbody>
  
