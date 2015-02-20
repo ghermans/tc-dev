@@ -233,7 +233,7 @@ class Planning extends CI_Controller {
     }
     
 
-	public function request_tasks()
+	public function request_task()
 	{
 		if (!$this->ion_auth->logged_in())
 		{
@@ -241,9 +241,10 @@ class Planning extends CI_Controller {
 		  redirect('auth/login', 'refresh');
 		}
 		
-	   $data['department'] = $this->department_model->get_departments();
-		$data['users'] = $this->ion_auth->users()->result();	   
-	   $this->load->vars($data);
+	  $data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');		
+	  $data['task'] = $this->planning_model->get_tasks();
+	  $data['users'] = $this->ion_auth->users()->result();	   
+	  $this->load->vars($data);
 		
 		if (!$this->ion_auth->in_group(1))
 		{
@@ -258,15 +259,15 @@ class Planning extends CI_Controller {
 	if ($this->form_validation->run() === FALSE)
 	{
 		$this->load->view('templates/header', $data);
-		$this->load->view('planning/control_tasks', $data);
+		$this->load->view('planning/request_task', $data);
 		$this->load->view('templates/footer');
 
 	}
 	else
-	{   $this->planning_model->set_event();		
+	{   $this->planning_model->request_task();		
 			
 		$this->load->view('templates/header', $data);	
-		$this->load->view('planning/control_tasks', $data);
+		$this->load->view('planning/request_task', $data);
 		$this->load->view('templates/footer');				
 			
 		}	
