@@ -1,7 +1,7 @@
 <div class="page-header"> 
  <h2>Request tasks</h2>
 </div>
-<p><button type="button" class="btn btn-success" data-toggle="modal" data-target="#addshift"><?php echo lang('task_button_new') ?></button> </p>
+<p><a href="<?php echo base_url('planning/request_task'); ?>" class="btn btn-success"><?php echo lang('task_button_new') ?></a> </p>
 
 <div class="clearfix">&nbsp;</div>
 <?php if(!empty($message)) { ?>
@@ -113,7 +113,7 @@
 <div class="panel panel-info">
 <div class="panel-heading">Details</div>
 <div class="panel-body">
- <table class="table table-bordered table-hover table-responsive">
+ <table class="table table-hover table-responsive">
   <thead>
     <tr>
      <th>Task id</th>
