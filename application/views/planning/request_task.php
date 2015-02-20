@@ -2,7 +2,6 @@
 <h3><span class="fa fa-clock-o"></span> <?php echo lang('task_heading');?></h3>
 </div>
 
-<p><button type="button" class="btn btn-success" data-toggle="modal" data-target="#addshift"><?php echo lang('task_button_new') ?></button> </p>
 
 <div class="clearfix">&nbsp;</div>
 
@@ -39,23 +38,15 @@
    
    <div class="form-group">  
    <label for="type" class="control-label col-md-3"> Task starts </label>
-     <div class="col-md-5">
-      <select class="form-control"> 
-       <?php foreach($tasks as $task_item):?>
-       <option value="<?php echo $task_item['task_id'];?>"><?php echo $task_item['task_type']; ?></option>
-       <?php endforeach ?>   
-      </select>
+     <div class="col-md-3">
+      <?php echo form_input('request_start', '', 'class="form-control"'); ?>
      </div>
    </div> 
    
    <div class="form-group">  
    <label for="type" class="control-label col-md-3"> Task ends </label>
-     <div class="col-md-5">
-      <select class="form-control"> 
-       <?php foreach($tasks as $task_item):?>
-       <option value="<?php echo $task_item['task_id'];?>"><?php echo $task_item['task_type']; ?></option>
-       <?php endforeach ?>   
-      </select>
+     <div class="col-md-3">
+      <?php echo form_input('request_stop', '', 'class="form-control"'); ?>
      </div>
    </div>
    
