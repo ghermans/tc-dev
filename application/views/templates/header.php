@@ -9,25 +9,21 @@
     <title>Time Control - Dashboard</title>
 
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo base_url("css/jquery-ui.min.css");?>" rel="stylesheet">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">    
     <link href="<?php echo base_url("css/jquery.circliful.css");?>" rel="stylesheet">     
     <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.1.1/fullcalendar.min.css" rel="stylesheet">
     <link href="<?php echo base_url("css/fullcalendar.css");?>" rel="stylesheet">
     <link href="http://dev.timecontrol.be/css/app.css" rel="stylesheet">
     <link href="<?php echo base_url("css/bootstrap-switch.css");?>" rel="stylesheet">
-    <link href="<?php echo base_url("css/listnav.css");?>" rel="stylesheet">   
-    <link href="<?php echo base_url("css/jBox.css");?>" rel="stylesheet">       
-    <link href="<?php echo base_url("css/jquery.bootgrid.css");?>" rel="stylesheet">       
-    
-    <link href="<?php echo base_url("css/bootstrapValidator.css");?>" rel="stylesheet">
-    <link href="<?php echo base_url("css/bootstrap-formhelpers.css")?>" rel="stylesheet" media="screen">
+    <link href="<?php echo base_url("css/jBox.css");?>" rel="stylesheet">    
+       
 
-    <link href="<?php echo base_url("css/jquery.datetimepicker.css");?>" rel="stylesheet">
 
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/data.js"></script>
 
 <script src="<?php echo base_url("js/jquery.circliful.js");?>"></script>	
 
